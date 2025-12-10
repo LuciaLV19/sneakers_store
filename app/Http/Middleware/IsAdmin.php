@@ -16,11 +16,14 @@ class IsAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role === 'admin') {
-            return $next($request);
+        if (!Auth::check()) {
+            return redirect('/login');
         }
 
-        abort(403, 'Unauthorized');
+        if (Auth::user()->role === 'admin') {
+            return $next($request);
+        }
+        return redirect('/')->with('error', 'You do not have admin access.');
     }
 }
     

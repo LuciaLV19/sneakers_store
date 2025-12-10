@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Product;
 use App\Models\Category;
 
@@ -24,7 +25,7 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'nullable|string',
@@ -33,20 +34,17 @@ class ProductController extends Controller
             'img' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $product = new Product;
-        $product->name = $request->name;
-        $product->description = $request->description ?? '';
-        $product->price = $request->price;
-        $product->stock = $request->stock ?? 0;
-        if ($request->hasFile('img')) {
-            $product->img = $request->file('img')->store('products', 'public');
+        if($request->hasFile('img')){
+            $data['img'] = $request->file('img')->store('products', 'public');
         }
 
-        $product->save();
+        $product = Product::create($data);
 
-        $product->categories()->sync($request->categories);
+        if (!empty($data['categories'])) {
+            $product->categories()->sync($data['categories']);
+        }
 
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success', 'Product created successfully.');
     }
 
     public function edit($id)
@@ -58,9 +56,9 @@ class ProductController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Product $product)
     {
-        $request->validate([
+        $data = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'nullable|string',
@@ -68,25 +66,24 @@ class ProductController extends Controller
             'stock' => 'nullable|integer',
             'img' => 'nullable|file|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
+        if($request->hasFile('img')){
+            if($product->img){
+                Storage::disk('public')->delete($product->img);
+            }
+            $data['img'] = $request->file('img')->store('products', 'public');
+        }
 
-        $product = Product::findOrFail($id);
-        $product->update([
-            'name' => $request->name,
-            'description' => $request->description ?? '',
-            'price' => $request->price,
-            'stock' => $request->stock ?? 0,
-            'img' => $request->hasFile('img') ? $request->file('img')->store('products', 'public') : $product->img,
-            'categories' => $request->categories
-        ]);
-
-        $product->categories()->sync($request->categories);
+        $product->update($data);
+        $product->categories()->sync($data['categories'] ?? []);
 
         return redirect()->route('products.index') ->with('success', 'Product updated successfully.');
     }
 
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        $product = Product::findOrFail($id);
+        if($product->img){
+            Storage::disk('public')->delete($product->img);
+        }
         $product->categories()->detach();
         $product->delete();
 
