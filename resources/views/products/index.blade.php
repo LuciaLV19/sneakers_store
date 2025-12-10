@@ -9,14 +9,14 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2>
+        <h1>
             {{ __('Products') }}
-        </h2>
+        </h1>
     </x-slot>
 
     <div class="container">
-        <div class="actions">
-            <a href="{{ route('products.create') }}" class="btn btn-primary">
+        <div class="top-actions">
+            <a href="{{ route('products.create') }}" class="button-create">
                 Create Product
             </a>
         </div>
@@ -64,10 +64,10 @@
                             </td>
                             
                             <td class="actions">
-                                <a href="{{ route('products.edit', $product->id) }}" class="btn btn-secondary">Edit</a>
+                                <a href="{{ route('products.edit', $product->id) }}" class="button-edit">Edit</a>
                                 <form action="{{ route('products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
                                     @csrf @method('DELETE')
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="submit" class="button-delete">Delete</button>
                                 </form>
                             </td>
                         </tr>
