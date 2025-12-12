@@ -408,10 +408,10 @@ h1 {
 .choices__list--dropdown {
     .choices__item--selectable {
         &:hover {
-            background-color: #e5e7eb; // Color claro
+            background-color: #e5e7eb;
 
             html.dark & {
-                background-color: #374151; // Color oscuro
+                background-color: #374151;
             }
         }
     }
@@ -456,7 +456,7 @@ h1 {
             color: white;
 
             &:hover {
-                background-color: darken(#6b7280, 10%);
+                background-color: #9ba0aa;
             }
         }
     }
