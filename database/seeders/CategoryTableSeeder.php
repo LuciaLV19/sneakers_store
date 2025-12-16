@@ -25,7 +25,7 @@ class CategoryTableSeeder extends Seeder
             ['name' => 'Basketball', 'type' => 'usage'],
             ['name' => 'Skate', 'type' => 'usage'],
             ['name' => 'Training', 'type' => 'usage'],
-            ['name' => 'Fútbol', 'type' => 'usage'],
+            ['name' => 'Football', 'type' => 'usage'],
 
             // Brand
             ['name' => 'Nike', 'type' => 'brand'],
@@ -36,6 +36,7 @@ class CategoryTableSeeder extends Seeder
             ['name' => 'New Balance', 'type' => 'brand'],
             ['name' => 'Converse', 'type' => 'brand'],
             ['name' => 'Lacoste', 'type' => 'brand'],
+            ['name' => 'Vans', 'type' => 'brand'],
         ]);
     }
 }

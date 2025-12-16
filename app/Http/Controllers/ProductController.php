@@ -13,14 +13,14 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::all();
-        return view('products.index', compact('products'));
+        return view('admin.products.index', compact('products'));
     }
 
 
     public function create()
     {
         $categories = Category::all();
-        return view('products.create', compact('categories'));
+        return view('admin.products.create', compact('categories'));
     }
 
     public function store(Request $request)
@@ -44,7 +44,7 @@ class ProductController extends Controller
             $product->categories()->sync($data['categories']);
         }
 
-        return redirect()->route('products.index')->with('success', 'Product created successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product created successfully.');
     }
 
     public function edit($id)
@@ -52,7 +52,7 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
         $categories = Category::all();
 
-        return view('products.edit', compact('product', 'categories'));
+        return view('admin.products.edit', compact('product', 'categories'));
     }
 
 
@@ -76,7 +76,7 @@ class ProductController extends Controller
         $product->update($data);
         $product->categories()->sync($data['categories'] ?? []);
 
-        return redirect()->route('products.index') ->with('success', 'Product updated successfully.');
+        return redirect()->route('admin.products.index') ->with('success', 'Product updated successfully.');
     }
 
     public function destroy(Product $product)
@@ -87,6 +87,6 @@ class ProductController extends Controller
         $product->categories()->detach();
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+        return redirect()->route('admin.products.index')->with('success', 'Product deleted successfully.');
     }
 }

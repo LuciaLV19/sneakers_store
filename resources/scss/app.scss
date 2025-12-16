@@ -1,20 +1,234 @@
 //Variables
 $primary-color: #6b1616;
+$primary-color-soft: #930202;
 $secondary-color: #000000;
+$secondary-color-soft: #333333;
+$tertiary-color: #ffffff;
+$tertiary-color-soft: #e1e1e1;
 $font-primary: "Exo 2", sans-serif;
-$font-accent: "Rubik Glitch", cursive;
-$light-bg: #ffffff;
-$light-card: #f9fafb;
-$light-border: #d1d5db;
+$font-accent: "Paprika", cursive;
 $light-text: #111827;
+$red: #f87171;
+$green: #34d399;
 
 $dark-bg: #1f2937;
 $dark-card: #2d3748;
 $dark-border: #4b5563;
 $dark-text: #f3f4f6;
 
-$primary: #2563eb;
-$primary-hover: #1e40af;
+$focus-border: #2563eb;
+$blue-hover: #1e40af;
+
+/*============================ */
+// DASHBOARD ADMIN STYLES
+/*============================ */
+
+.admin-dashboard-layout {
+    display: flex;
+}
+
+// Sidebar container styles
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: #9fd4ffef;
+    color: $secondary-color;
+    display: flex;
+    flex-direction: column;
+    font-family: $font-primary;
+
+    html.dark & {
+        background: #0f172a;
+        color: #e5e7eb;
+    }
+
+    // Sidebar title
+    .brand {
+        padding: 1.5rem;
+        font-size: 1.3rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.247);
+    }
+    // Sidebar navigation
+    nav {
+        flex: 1;
+        padding: 1rem 0;
+
+        // Links styles
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.9rem 1.5rem;
+            color: #081540;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.2s ease;
+
+            html.dark & {
+                color: #e5e7eb;
+            }
+        }
+        // Link hover effect
+        .nav-link:hover {
+            background: rgba(255, 255, 255, 0.155);
+            color: $blue-hover;
+            html.dark & {
+                color: #aed2ff;
+            }
+        }
+        // Active link effect
+        .nav-link.active {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+            border-left: 4px solid #3b82f6;
+            html.dark & {
+                color: #e5e7eb;
+            }
+        }
+    }
+    // Sidebar footer
+    .sidebar-footer {
+        padding: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.247);
+        // Logout button
+        button {
+            width: 100%;
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-weight: 600;
+            cursor: pointer;
+            padding: 0.75rem;
+            text-align: left;
+            transition: 0.2s ease;
+
+            // Button Hover
+            button:hover {
+                background: rgba(0, 0, 0, 0.057);
+            }
+        }
+    }
+}
+// Main content styles
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+    background-color: #c0e3ffef;
+
+    html.dark & {
+        background-color: $dark-bg;
+    }
+    // Admin title
+    .admin-title {
+        font-size: 1.2rem;
+        font-weight: 700;
+        font-family: $font-primary;
+        margin-bottom: 1rem;
+        color: $light-text;
+
+        html.dark & {
+            color: $dark-text;
+        }
+    }
+    // Dashboard container
+    .container {
+        flex: 1;
+        background: #f9fafb;
+        font-family: $font-primary;
+        border-radius: 2rem;
+        html.dark & {
+            background-color: #05122b;
+            color: $tertiary-color;
+        }
+        // Dashboard title
+        .dashboard-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            font-family: $font-accent;
+            margin: 1.5rem;
+            color: $light-text;
+
+            html.dark & {
+                color: $dark-text;
+            }
+        }
+        // Set stats cards grid
+        .stats-grid {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        // Set stats graphs grid
+        .stats-grid-graphs {
+            padding: 1rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        // Individual stat card styles
+        .stat-card {
+            background: #fff;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background: #c0e3ffef;
+
+            html.dark & {
+                background-color: $dark-bg;
+                color: $tertiary-color;
+            }
+
+            .label{
+                font-size: 1rem;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+/*============================ */
+// DASHBOARD CUSTOMER STYLES
+/*============================ */
+
+
+/*============================ */
+// ORDERS VIEW STYLES
+/*============================ */
+.orders-container {
+    display: flex;
+}
+
+/*============================ */
+// DISCOUNTS VIEW STYLES
+/*============================ */
+.discounts-container {
+    display: flex;
+}
+
+/*============================ */
+// SHIPPING VIEW STYLES
+/*============================ */
+.shipping-container {
+    display: flex;
+}
+
+/*============================ */
+// PRODUCTS VIEW STYLES
+/*============================ */
+.products-container {
+    display: flex;
+}
 
 #theme-toggle {
     position: fixed;
@@ -100,7 +314,7 @@ h1 {
         }
 
         th {
-            background-color: #aeaeae;
+            background-color: #9fd4ffef;
 
             html.dark & {
                 background-color: #100468;
@@ -108,7 +322,7 @@ h1 {
         }
         tr {
             &:nth-child(even) {
-                background-color: #dcdcdc;
+                background-color: #d0eaffef;
             }
 
             // Dark mode styles
@@ -186,7 +400,7 @@ h1 {
         }
         /* Badges stock */
         .stock-in {
-            background-color: #34d399; /* verde */
+            background-color: #34d399;
             color: white;
             padding: 0.25rem 0.5rem;
             border-radius: 0.25rem;
@@ -210,7 +424,7 @@ h1 {
 
 //Form styles
 .form-container {
-    background-color: $light-card;
+    background-color: $tertiary-color-soft;
     padding: 2rem;
     border-radius: 0.75rem;
     max-width: 800px;
@@ -277,7 +491,7 @@ h1 {
         transition: 0.25s;
 
         &:focus {
-            border-color: $primary;
+            border-color: $focus-border;
             box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
         }
 
@@ -288,7 +502,7 @@ h1 {
         }
 
         html.dark &:focus {
-            border-color: $primary;
+            border-color: $focus-border;
             box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.5);
         }
     }
@@ -329,7 +543,6 @@ h1 {
     }
 }
 
-
 /* ============================
    FILA DE CAMPOS
 ============================ */
@@ -349,7 +562,7 @@ h1 {
 .choices__inner {
     background-color: #ffffff;
     border: 1px solid #cccccc;
-    outline: none; 
+    outline: none;
     border-radius: 0.5rem;
     padding: 0.6rem 0.75rem;
     min-height: 45px;
@@ -443,11 +656,11 @@ h1 {
         border: none;
 
         &.btn-primary {
-            background-color: $primary;
+            background-color: $focus-border;
             color: white;
 
             &:hover {
-                background-color: $primary-hover;
+                background-color: $blue-hover;
             }
         }
 

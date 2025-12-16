@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -11,6 +12,25 @@ use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
+    public function index()
+{
+    $orders = Order::with('items.product')
+        ->where('user_id', Auth::id())
+        ->orderBy('created_at', 'desc')
+        ->get();
+
+    return view('orders.index', compact('orders'));
+}
+
+    public function adminIndex()
+    {
+        $orders = Order::with('items.product', 'user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('admin.orders.index', compact('orders'));
+    }
+
     /**
      * Store a newly created order in storage.
      * @param  \Illuminate\Http\Request  $request
@@ -58,15 +78,15 @@ class OrderController extends Controller
             }
 
             $order = Order::create([
-            'user_id' => Auth::id(),
-            'shipping_address' => $request->input('shipping_address'),
-            'payment_method' => $request->input('payment_method'),
-            'total_amount' => $totalAmount,
-            'status' => 'Processing',
+                'user_id' => Auth::id(),
+                'shipping_address' => $request->input('shipping_address'),
+                'payment_method' => $request->input('payment_method'),
+                'total_amount' => $totalAmount,
+                'status' => 'Processing',
             ]);
 
             foreach ($orderItems as $item) {
-            $order->items()->create($item);
+                $order->items()->create($item);
             }
             DB::commit();
             Session::forget('cart');
@@ -74,6 +94,6 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return redirect()->route('cart.index')->with('error', 'Failed to place order. Please try again.');
-            }
+        }
     }
 }
