@@ -8,12 +8,19 @@ Alpine.start();
 
 const toggleBtn = document.getElementById('theme-toggle');
 const html = document.documentElement;
+const togglePassword = document.querySelector('#togglePassword');
+const password = document.querySelector('#password');
+const eyeIcon = document.querySelector('#eyeIcon');
 
 function updateButtonText() {
     if (html.classList.contains('dark')) {
-        toggleBtn.textContent = 'Light Mode';
+        if (toggleBtn) {
+            toggleBtn.textContent = 'Light Mode';
+        }
     } else {
-        toggleBtn.textContent = 'Dark Mode';
+        if (toggleBtn) {
+            toggleBtn.textContent = 'Dark Mode';
+        }
     }
 }
 
@@ -26,3 +33,11 @@ toggleBtn.addEventListener('click', () => {
   html.classList.toggle('dark');
   updateButtonText();
 });
+
+togglePassword.addEventListener('click', function (e) {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        
+        eyeIcon.classList.toggle('fa-eye');
+        eyeIcon.classList.toggle('fa-eye-slash');
+    });

@@ -1,7 +1,8 @@
 <x-app-layout>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <div class="admin-dashboard-layout">
+    <div class="admin-container">
         @include('admin.partials.sidebar')
+        
         <div class="main-content">
             <header>
                 <h2 class="admin-title">

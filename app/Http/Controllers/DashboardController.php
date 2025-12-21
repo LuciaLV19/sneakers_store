@@ -8,8 +8,8 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        if (Auth::user()->role === 'admin') {
-            return redirect()->route('dashboard.admin');
+        if (Auth::user()->role == 1) {
+            return redirect()->route('admin.dashboard.admin');
         }
 
         return redirect()->route('dashboard.customer');

@@ -35,20 +35,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('users', UserController::class);
+    Route::resource('discounts', DiscountController::class);
+    Route::get('orders', [OrderController::class, 'adminIndex'])->name('orders.index');
+
     Route::get('dashboard', function () {
         return view('dashboard.admin');
     })->name('dashboard.admin');
-
-    Route::resource('discounts', DiscountController::class);
 
     // Rutas para Envío y Tarifas
     Route::get('shipping', [SettingsController::class, 'shippingIndex'])->name('shipping.index');
     Route::post('shipping', [SettingsController::class, 'shippingStore'])->name('shipping.store');
 
-    Route::get('orders', [OrderController::class, 'adminIndex'])->name('admin.orders.index');
 });
 Route::middleware('auth')->post('checkout', [OrderController::class,'store'])->name('checkout.store');
 Route::middleware('auth')->get('orders', [OrderController::class,'index'])->name('orders.index');

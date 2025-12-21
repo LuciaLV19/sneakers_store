@@ -25,7 +25,7 @@ class DiscountController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'percentage' => 'required|numeric|min:0|max:100',
+            'percentage' => 'required|unique:discounts,name|numeric|min:0|max:100',
         ]);
 
         Discount::create($request->all());

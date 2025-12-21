@@ -14,6 +14,21 @@ export default {
         extend: {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                title: ['var(--font-title)'],
+                main: ['var(--font-main)'],
+            },
+            colors: {
+                'brand-primary': 'var(--brand-primary)',
+                'brand-primary-soft': 'var(--brand-primary-soft)',
+                'brand-secondary': 'var(--brand-secondary)',
+                'brand-secondary-soft': 'var(--brand-secondary-soft)',
+                'bg-white': 'var(--bg-white)',
+                'bg-light': 'var(--bg-light)',
+                'border-soft': 'var(s--border-soft)',
+                'success': 'var(--success)',
+                'error': 'var(--error)',
+                'info': 'var(--info)',
+                'info-hover': 'var(--info-hover)',
             },
         },
     },

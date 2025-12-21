@@ -1,77 +1,69 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Products</title>
-</head>
-
 <x-app-layout>
-
-    <div class="products-container">
+    <div class="admin-container">
+        {{-- Sidebar --}}
         @include('admin.partials.sidebar')
 
-        <div class="container">
-            <div class="top-actions">
-                <a href="{{ route('products.create') }}" class="button-create">
-                    Create Product
-                </a>
-            </div>
-            <div class="table-wrapper">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Stock</th>
-                            <th>Image</th>
-                            <th>Categories</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-            </div>
-                <tbody>
-                    @foreach ($products as $product)
-                        <tr>
-                            <td>{{ $product->name }}</td>
-                            <td class="description">{{ $product->description }}</td>
-                            <td class="price">{{ $product->price }}€</td>
-                            <td>
-                                @php
-                                    // Lógica para asignar la clase de stock: 'stock-in' o 'stock-out'
-                                    $stockClass = $product->stock > 0 ? 'stock-in' : 'stock-out';
-                                @endphp
-                                {{-- APLICAR CLASE: Usamos la clase condicional para el badge de stock --}}
-                                <span class="{{ $stockClass }}">
-                                    {{ $product->stock }}
-                                </span>
-                            </td>
-                            
-                            <td>
-                                @if($product->img)
-                                    <img src="{{ asset('storage/' . $product->img) }}" class="product-thumb" alt="{{ $product->name }}">
-                                @else
-                                    <span class="text-muted" style="font-style: italic; font-size: 0.875rem;">No image</span>
-                                @endif
-                            </td>
-                            
-                            <td class="text-muted">
-                                {{ $product->categories?->pluck('name')->implode(', ') ?? '-' }}
-                            </td>
-                            
-                            <td class="actions">
-                                <a href="{{ route('products.edit', $product->id) }}" class="button-edit">Edit</a>
-                                <form action="{{ route('products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Are you sure?');">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="button-delete">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        {{-- Main Content --}}
+        <div class="main-content">
+                <h2 class="admin-title">Gestión de Productos</h2>
+            <main class="container">
+                <div class="actions">
+                    <a href="{{ route('admin.products.create') }}" class="button-create">+ Nuevo Producto</a>
+                </div>
+                <div class="table-wrapper">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Imagen</th>
+                                <th>Categorías</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($products as $product)
+                                <tr>
+                                    <td class="font-bold">{{ $product->name }}</td>
+                                    <td class="description" title="{{ $product->description }}">
+                                        {{ $product->description }}
+                                    </td>
+                                    <td class="price">{{ number_format($product->price, 2) }}€</td>
+                                    <td>
+                                        <span class="{{ $product->stock > 0 ? 'stock-in' : 'stock-out' }}">
+                                            {{ $product->stock }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        @if($product->img)
+                                            <img src="{{ asset('storage/' . $product->img) }}" class="product-thumb" alt="{{ $product->name }}">
+                                        @else
+                                            <span class="text-muted">Sin imagen</span>
+                                        @endif
+                                    </td>
+                                    <td class="text-muted">
+                                        {{ $product->categories?->pluck('name')->implode(', ') ?: '-' }}
+                                    </td>
+                                    <td class="table-actions">
+                                        <div class="btn-actions">
+                                            <a href="{{ route('admin.products.edit', $product->id) }}" class="button-edit">Edit</a>
+                                    
+                                            <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro?');">
+                                                @csrf 
+                                                @method('DELETE')
+                                                <button type="submit" class="button-delete">Delete</button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </main>
         </div>
     </div>
 </x-app-layout>
